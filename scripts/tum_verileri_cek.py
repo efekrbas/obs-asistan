@@ -58,6 +58,7 @@ def main():
     parser.add_argument("--program", action="store_true", help="Ders programını göster")
     parser.add_argument("--mesajlar", action="store_true", help="Mesajları göster")
     parser.add_argument("--duyurular", action="store_true", help="Duyuruları göster")
+    parser.add_argument("--duyuru-detay", type=int, metavar="NO", help="Duyuru detayını göster (numara ile)")
     parser.add_argument("--takvim", action="store_true", help="Akademik takvimi göster")
     parser.add_argument("--excel", action="store_true", help="Excel raporu oluştur")
     parser.add_argument("--html", action="store_true", help="HTML raporu oluştur")
@@ -153,10 +154,53 @@ def main():
         duyurular = api.duyurular()
         if isinstance(duyurular, list):
             print(f"{Fore.YELLOW}📢 Duyurular ({len(duyurular)}){Style.RESET_ALL}\n")
+            
+            import re
+            import html
+            
             for i, d in enumerate(duyurular[:15], 1):
-                print(f"  {i}. {d.get('BaslikAd', '')}")
-                print(f"     {tarih_formatla(d.get('SistemeEklenmeTarihi'))}")
+                baslik = d.get('BaslikAd', '')
+                tarih = tarih_formatla(d.get('SistemeEklenmeTarihi'))
+                ozet = d.get('Ozet', '')
+                
+                # HTML etiketlerini temizle
+                ozet_temiz = re.sub(r'<[^>]+>', '', ozet)
+                ozet_temiz = html.unescape(ozet_temiz)
+                ozet_temiz = ozet_temiz.replace('&nbsp;', ' ').replace('&ouml;', 'ö')
+                ozet_temiz = ozet_temiz.replace('&uuml;', 'ü').replace('&ccedil;', 'ç')
+                ozet_temiz = ozet_temiz.replace('&amp;', '&').replace('&quot;', '"')
+                ozet_temiz = ' '.join(ozet_temiz.split())  # Fazla boşlukları temizle
+                
+                print(f"{Fore.CYAN}{i}. {baslik}{Style.RESET_ALL}")
+                print(f"   📅 {tarih}")
+                if ozet_temiz:
+                    kisa = ozet_temiz[:250]
+                    if len(ozet_temiz) > 250:
+                        kisa += "..."
+                    print(f"   📝 {kisa}")
                 print()
+            
+            if len(duyurular) > 15:
+                print(f"   ... ve {len(duyurular) - 15} duyuru daha\n")
+
+    elif args.duyuru_detay:
+        duyurular = api.duyurular()
+        if isinstance(duyurular, list):
+            idx = args.duyuru_detay - 1
+            if 0 <= idx < len(duyurular):
+                d = duyurular[idx]
+                import re
+                import html
+                print(f"{Fore.YELLOW}📢 {d.get('BaslikAd', '')}{Style.RESET_ALL}")
+                print(f"📅 {tarih_formatla(d.get('SistemeEklenmeTarihi'))}\n")
+                icerik = re.sub(r'<[^>]+>', '', d.get('Ozet', ''))
+                icerik = html.unescape(icerik)
+                icerik = icerik.replace('&nbsp;', ' ').replace('&ouml;', 'ö')
+                icerik = icerik.replace('&uuml;', 'ü').replace('&ccedil;', 'ç')
+                icerik = icerik.replace('&amp;', '&').replace('&quot;', '"')
+                print(icerik)
+            else:
+                print(f"{Fore.RED}❌ Geçersiz duyuru numarası! (1 - {len(duyurular)}){Style.RESET_ALL}")
     
     # ============ TAKVİM ============
     elif args.takvim:
