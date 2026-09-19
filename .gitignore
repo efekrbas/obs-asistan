@@ -5,8 +5,10 @@ obs_cookies.pkl
 # Veriler
 obs_veri.json
 obs_tum_veri.json
+son_notlar.json
 *.csv
 *.xlsx
+*.html
 
 # Python
 __pycache__/
