@@ -1,10 +1,35 @@
-# OBS Asistan
+# OBS Asistan 🎓
 
-Herhangi bir üniversitenin Öğrenci Bilgi Sistemi (OBS) için Python tabanlı modern bir otomasyon ve raporlama aracıdır.
+Herhangi bir üniversitenin Öğrenci Bilgi Sistemi (OBS) için Python tabanlı modern bir otomasyon, veri çekme ve raporlama aracıdır.
 
 ## ⚠️ Yasal Uyarı
 
-Bu proje **bağımsız bir öğrenci projesidir**. Herhangi bir üniversiteyle resmi bağlantısı yoktur. Sadece kendi hesabınızla kişisel amaçlarla kullanmanız amaçlanmıştır.
+Bu proje **bağımsız bir öğrenci projesidir**. Herhangi bir üniversiteyle resmi bir bağlantısı veya ortaklığı yoktur. Yalnızca kendi hesabınızla kişisel amaçlarla eğitim/otomasyon amaçlı kullanılması hedeflenmiştir.
+
+---
+
+## ⚡ 3 Adımda Hızlı Başlangıç
+
+```bash
+# 1. Projeyi klonlayın ve klasöre girin
+git clone https://github.com/efekrbas/obs-asistan.git
+cd obs-asistan
+
+# 2. Gerekli kütüphaneleri yükleyin
+pip install -r requirements.txt
+
+# 3. Giriş yapın (Çerezleri kaydedin)
+python scripts/tum_verileri_cek.py --login
+```
+
+---
+
+## 📋 Sistem Gereksinimleri
+
+- **Python 3.8+**
+- **Google Chrome** (Selenium ile otomatik giriş için gereklidir)
+
+---
 
 ## ✨ Özellikler
 
@@ -18,13 +43,9 @@ Bu proje **bağımsız bir öğrenci projesidir**. Herhangi bir üniversiteyle r
 - 🌐 **Modern HTML Raporu (.html)**: Şık, mobil uyumlu ve temiz bir web arayüzünde tüm verileri tek tıkla raporlama.
 - 🔔 **Periyodik Not Takip Modu & Telegram Bildirimi**: Arka planda çalışarak yeni bir sınav notu açıklandığı anda notu anında yakalama.
 
-## 🚀 Kurulum
+---
 
-```bash
-pip install -r requirements.txt
-```
-
-## 📖 Kullanım
+## 📖 Kullanım ve Komutlar
 
 ```bash
 # Giriş yap / Çerezleri yenile
@@ -45,7 +66,7 @@ python scripts/tum_verileri_cek.py --mesajlar
 # Duyuruları listele
 python scripts/tum_verileri_cek.py --duyurular
 
-# Belirli bir duyurunun tam metnini oku
+# Belirli bir duyurunun tam metnini oku (Örn: 1. duyuru)
 python scripts/tum_verileri_cek.py --duyuru-detay 1
 
 # Akademik takvimi listele
@@ -57,17 +78,24 @@ python scripts/tum_verileri_cek.py --excel
 # HTML (.html) web raporu oluştur
 python scripts/tum_verileri_cek.py --html
 
-# Yeni not takip modunu başlat (Varsayılan 30 dk)
+# Yeni not takip modunu başlat (Varsayılan 30 dk aralıkla)
 python scripts/tum_verileri_cek.py --takip
 ```
 
-## ⚙️ Yapılandırma (Opsiyonel)
+---
 
-Telegram üzerinden anlık bildirim almak isterseniz:
-1. `config.example.json` dosyasını `config.json` olarak kopyalayın.
-2. BotFather'dan aldığınız token'ı ve Chat ID'nizi girin.
-*(Not: `config.json` dosyası `.gitignore` ile korunmaktadır ve asla GitHub'a gitmez.)*
+## ⚙️ Yapılandırma (Opsiyonel Telegram Bildirimi)
+
+Yeni not açıklandığında doğrudan Telegram'dan bildirim almak isterseniz:
+1. `config.example.json` dosyasını `config.json` olarak kopyalayın:
+   ```bash
+   cp config.example.json config.json
+   ```
+2. `@BotFather` üzerinden aldığınız bot token'ınızı ve Chat ID'nizi `config.json` dosyasına yazın.
+> 🔒 **Gizlilik Notu:** `config.json`, çerez dosyaları ve oluşturulan tüm raporlar `.gitignore` ile korunmaktadır, asla GitHub'a gitmez.
+
+---
 
 ## 📜 Lisans
 
-MIT License
+Bu proje [MIT Lisansı](LICENSE) ile lisanslanmıştır.
