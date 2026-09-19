@@ -72,6 +72,11 @@ def main():
     
     # Giriş / Yenile
     if args.login or args.yenile:
+        # Eski çerezi sil
+        if os.path.exists("obs_cookies.pkl"):
+            os.remove("obs_cookies.pkl")
+            print(f"{Fore.YELLOW}🗑️  Eski çerez silindi.{Style.RESET_ALL}")
+        
         giris = OBSGiris()
         giris.interaktif_giris()
         return
