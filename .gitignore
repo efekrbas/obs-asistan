@@ -1,0 +1,19 @@
+# Çerezler
+obs_cookies.pkl
+*.pkl
+
+# Veriler
+obs_veri.json
+obs_tum_veri.json
+*.csv
+*.xlsx
+
+# Python
+__pycache__/
+*.pyc
+.env
+venv/
+
+# IDE
+.vscode/
+.idea/
